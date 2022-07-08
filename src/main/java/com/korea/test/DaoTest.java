@@ -46,27 +46,7 @@ public class DaoTest {
 //		dao.Update(dto);	
 //	}
 	
-	@Test
-	public void Test4() {
-		MemberDTO dto = new MemberDTO();
-		dto.setEmail("admin@admin.com");
-		dto.setPwd("1234");
-		dto.setAddr1("");
-		dto.setAddr2("");
-		dto.setGrade(2);
-		
-		MemberService service = MemberService.getInstance();
-		service.MemberInsert(dto); //관리자 계정 등록
-		
-		dto.setEmail("guest@guest.com");
-		dto.setPwd("1234");
-		dto.setAddr1("");
-		dto.setAddr2("");
-		dto.setGrade(0);
-		
-		service.MemberInsert(dto);
-	
-	}
+
 	
 
 }

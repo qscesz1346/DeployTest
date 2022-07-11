@@ -1,0 +1,46 @@
+--------------------------
+1 db 
+--------------------------
+--DB생성
+drop table tbl_board;
+create table tbl_board
+(
+    no int primary key,
+    title varchar2(50) not null,
+    content varchar2(255) not null,
+    writer varchar2(100) not null,
+    regdate date,
+    pwd varchar(255) not null,
+    count int,
+    ip varchar(50),
+    filename varchar(100),
+    filesize varchar(100)
+);
+desc tbl_board;
+
+--500 Post
+
+DECLARE
+NUM1 NUMBER :=1;
+BEGIN
+    LOOP
+     
+     insert into tbl_board values
+     (NUM1,'Title'||NUM1,'Content'||NUM1,'Writer'||NUM1,sysdate,'1234',0,'127.0.0.1','0','0');
+     
+    NUM1 := NUM1+1; 
+    EXIT WHEN NUM1 >500; --NUM1이 10보다 크면 LOOP종료
+    END LOOP;
+END;
+
+select * from tbl_board;
+
+
+
+
+
+
+
+
+
+

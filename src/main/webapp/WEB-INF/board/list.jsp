@@ -12,7 +12,7 @@
 </head>
 <body>
 
-	<div class="container-md" id=wrapper style="width:80%;margin:100px auto;">
+	<div class="container-md" id=wrapper style="margin:100px auto;">
 		<!-- TopMenu -->
 		<%@include file="/resources/includes/topmenu.jsp" %>
 			
@@ -53,27 +53,27 @@
 					<th> Date</th>
 					<th> COUNT</th>
 				</tr>
+				
+				<%@page import="java.util.*,com.korea.dto.*" %>
+				<%
+					ArrayList<BoardDTO>list = (ArrayList<BoardDTO>)request.getAttribute("list");
+					for(int i=0;i<list.size();i++)
+					{
+				%>
 				<tr>
-					<td>1</td>
-					<td>글제목1</td>
-					<td>작성자1</td>
-					<td>2022-07-11</td>
-					<td>1</td>
+					<td><%=list.get(i).getNo() %></td>
+					<td><%=list.get(i).getTitle() %></td>
+					<td><%=list.get(i).getWriter() %></td>
+					<td><%=list.get(i).getRegdate() %></td>
+					<td><%=list.get(i).getCount() %></td>
 				</tr>
-				<tr>
-					<td>2</td>
-					<td>글제목2</td>
-					<td>작성자2</td>
-					<td>2022-07-11</td>
-					<td>1</td>
-				</tr>
-				<tr>
-					<td>3</td>
-					<td>글제목3</td>
-					<td>작성자3</td>
-					<td>2022-07-11</td>
-					<td>1</td>
-				</tr>
+				<%
+					}
+				%>
+				
+
+
+
 				<tr>
 					<!-- 페이지네이션 -->
 					<td colspan=5  style=border-bottom:0px;>
@@ -98,7 +98,7 @@
 					
 				</tr>
 			</table>
-			<a href="/Board/post.do">글쓰기</a>
+			
 			
 		</div>
 		

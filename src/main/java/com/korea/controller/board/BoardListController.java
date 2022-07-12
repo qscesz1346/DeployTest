@@ -18,13 +18,15 @@ public class BoardListController implements SubController{
 		try {
 			
 			//파라미터
-			int start=0;
-			int end=0;
+			int start=1;
+			int end=10;
 			//입력값
 			//서비스실행
 			List<BoardDTO> list = service.getBoardList(start, end);
+			int tcnt = service.getTotalCnt();
 			
 			req.setAttribute("list", list);
+			req.setAttribute("tcnt", tcnt);
 			req.getRequestDispatcher("/WEB-INF/board/list.jsp").forward(req, resp);
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -47,7 +47,8 @@ public class LoginController implements SubController{
 					session.setMaxInactiveInterval(60*15);
 					
 					//View로 이동
-					resp.sendRedirect("/main.jsp");
+					resp.sendRedirect("/main.jsp");	
+					
 				}
 				else
 				{

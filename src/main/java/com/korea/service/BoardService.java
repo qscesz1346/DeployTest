@@ -19,9 +19,18 @@ public class BoardService {
 	}
 	private BoardService() {}
 	
+	
 	public List<BoardDTO> getBoardList(int start,int end)
 	{
 		return dao.Select(start, end);
 	}
+	
+	public int getTotalCnt() {
+		return dao.getTotalCount();
+	}
+	
+	
+	
+	
 	
 }

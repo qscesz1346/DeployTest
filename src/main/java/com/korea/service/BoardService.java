@@ -148,11 +148,10 @@ public class BoardService {
 	)
 	{
 		
-		System.out.println("파일명 ! : " + filename);
+	 
 		
 		
-		//파일명,	//등록날짜
-		//이메일계정 가져오기
+		//파일명,	//등록날짜 //이메일계정 가져오기
 		HttpSession session = req.getSession();
 		BoardDTO dto = (BoardDTO)session.getAttribute("dto");
 		
@@ -160,7 +159,7 @@ public class BoardService {
 		String regdate = dto.getRegdate();
 		regdate = regdate.substring(0,10);
 		
-		//System.out.println("REGDate : " +regdate);
+		 
 		//1 경로설정
 		String downdir="c://upload";	
 		String filepath= downdir+"/"+email+"/"+regdate+"/"+filename;

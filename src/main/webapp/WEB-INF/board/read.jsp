@@ -44,6 +44,8 @@
 					filelist = dto.getFilename().split(";");
 					filesize = dto.getFilesize().split(";");
 				}
+				 
+				
 			%>
 			<form action="" method="post" >
 				<input name="title" class="form-control mb-3 w-50" value="<%=dto.getTitle()%>">
@@ -70,12 +72,17 @@
 			      </div>
 			      <div class="modal-body">
 			         <!-- 첨부파일  -->
-			         	<%
-			         	
+			         	<%@page import="java.net.URLEncoder" %>
+			         	<%		         	
 			         		if(filelist!=null)
 			         		{
-								for(int i=0;i<filelist.length;i++){				
-										out.println("<a href=/Board/download.do?filename="+filelist[i]+">"+filelist[i]+"("+filesize[i]+" byte)</a><br>");
+								for(int i=0;i<filelist.length;i++){	
+									
+									String tmpfilename = filelist[i].substring(0,filelist[i].lastIndexOf("_"));
+									tmpfilename += filelist[i].substring(filelist[i].lastIndexOf("."),filelist[i].length());
+									
+									filelist[i] = URLEncoder.encode(filelist[i],"utf-8").replaceAll("\\+", "%20");							 
+										out.println("<a href=/Board/download.do?filename="+filelist[i]+">"+tmpfilename+"("+filesize[i]+" byte)</a><br>");
 									}
 			         		}
 			         		else

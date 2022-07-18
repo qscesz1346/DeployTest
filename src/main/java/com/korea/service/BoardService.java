@@ -89,8 +89,10 @@ public class BoardService {
 	
 				
 				//파일명 ,확장자명 구분하기
-				int start=FileName.length()-4;		//확장자구하기 위한 시작idx
-				int end=FileName.length();			//확장자구하기 위한 끝idx
+				
+				 
+				int start=FileName.lastIndexOf(".");		//확장자구하기 위한 시작idx
+				int end=FileName.length();					//확장자구하기 위한 끝idx
 				String ext=FileName.substring(start,end);	//파일명잘라내기(확장자만)
 				FileName = FileName.substring(0,start);	//파일명잘라내기(확장자제외)
 				
@@ -146,6 +148,9 @@ public class BoardService {
 	)
 	{
 		
+		System.out.println("파일명 ! : " + filename);
+		
+		
 		//파일명,	//등록날짜
 		//이메일계정 가져오기
 		HttpSession session = req.getSession();
@@ -170,6 +175,7 @@ public class BoardService {
 			filename=URLEncoder.encode(filename,"utf-8").replaceAll("\\+", "%20");
 			resp.setHeader("Content-Disposition", "attachment; fileName="+filename);
 		
+			
 			//04스트림형성(다운로드 처리)
 			FileInputStream fin = new FileInputStream(filepath);
 			ServletOutputStream bout=resp.getOutputStream();

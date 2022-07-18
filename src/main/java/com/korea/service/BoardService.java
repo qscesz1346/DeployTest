@@ -146,11 +146,7 @@ public class BoardService {
 			HttpServletRequest req,
 			HttpServletResponse resp
 	)
-	{
-		
-	 
-		
-		
+	{	
 		//파일명,	//등록날짜 //이메일계정 가져오기
 		HttpSession session = req.getSession();
 		BoardDTO dto = (BoardDTO)session.getAttribute("dto");
@@ -198,11 +194,80 @@ public class BoardService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	
+		return false;
+	}
+	
+	
+	//다중파일 다운로드
+	public boolean download
+	(		 
+			HttpServletRequest req,
+			HttpServletResponse resp
+	)
+	{	
+		//파일명,	//등록날짜 //이메일계정 가져오기
+		HttpSession session = req.getSession();
+		BoardDTO dto = (BoardDTO)session.getAttribute("dto");
 		
+		String email = dto.getWriter();
+		String regdate = dto.getRegdate();
+		regdate = regdate.substring(0,10);
 		
-	 
+		 
+		//1 경로설정
+		String downdir="c://upload";	
+		String filepath= downdir+"/"+email+"/"+regdate;
+		 
+		//2 헤더설정
+		resp.setContentType("application/octet-stream");
+
+		//3 파일검색
+		File dir = new File(filepath);
+		File[] flist = dir.listFiles(); // 파일들 꺼내오는 작업(절대경로)
 		
+			
+		//4 문자셋 설정
+		try {
+			
+			for(int i=0;i<flist.length;i++)
+			{
+				
+
+				String filename=flist[i].getName();
+				System.out.println("! : " + filename);
+				filename=URLEncoder.encode(filename,"utf-8").replaceAll("\\+", "%20");
+				resp.setHeader("Content-Disposition", "attachment; fileName="+filename);
+			
+				
+				//04스트림형성(다운로드 처리)
+				FileInputStream fin = new FileInputStream(flist[i]);
+				ServletOutputStream bout=resp.getOutputStream();
+				
+				int read=0;
+				byte[] buff = new byte[4096];
+				while(true)
+				{
+					 
+					read=fin.read(buff,0,buff.length);		 
+					if(read==-1)	 
+						break;		 		
+					bout.write(buff,0,read);	 
+				}
+			 
+				bout.flush();	
+				bout.close();	
+				fin.close();
+			
+			}
+			
+			return true;
 		
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
 		return false;
 	}
 	

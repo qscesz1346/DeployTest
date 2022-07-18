@@ -93,12 +93,31 @@
 						%>
 			         
 			      </div>
-			      <div class="modal-footer">	        
-			        <button type="button" class="btn btn-primary">모두받기</button>
+			      <div class="modal-footer">	
+			      	<form name=multipleform>        
+			        <a  class="btn btn-primary" href="javascript:alldownload()">모두받기</a>
+			        </form>
 			        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
 			      </div>
+			      
+			      <script>
+			
+			    		function alldownload()
+			    		{
+				      		 form = document.multipleform;
+			
+				      			for(i=0;i < <%=filelist.length%>;i++)	
+				      			{
+				      				form.action="/Board/download.do?filename="+<%=filelist[i].getName()%>;
+				      				form.submit();
+				      			}     			
+				      		 	      		
+				      	}
+			      </script>
 			    </div>
 			  </div>
+			  
+			  
 			</div>
 
 			

@@ -75,7 +75,7 @@
 			         		if(filelist!=null)
 			         		{
 								for(int i=0;i<filelist.length;i++){				
-										out.println("<a href=#>"+filelist[i]+"("+filesize[i]+" byte)</a><br>");
+										out.println("<a href=/Board/download.do?filename="+filelist[i]+">"+filelist[i]+"("+filesize[i]+" byte)</a><br>");
 									}
 			         		}
 			         		else

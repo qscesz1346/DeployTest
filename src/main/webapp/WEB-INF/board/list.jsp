@@ -54,11 +54,12 @@
 			
 			<%
 				//상단의 현재 페이지 번호 변경 위한 처리
-				if(request.getAttribute("nowPage")!=null)
-					nowPage=
-					Integer.parseInt(
-					(String)request.getAttribute("nowPage")
-					);
+	 			if(!request.getParameter("nowPage").equals("null"))
+				{
+					nowPage =Integer.parseInt(request.getParameter("nowPage"));
+
+					
+				} 
 				 
 			%>
 			

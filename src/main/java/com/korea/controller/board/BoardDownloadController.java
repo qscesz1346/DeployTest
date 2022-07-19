@@ -20,10 +20,8 @@ public class BoardDownloadController implements SubController{
 		//입력값
 		//서비스
 		boolean result=false;
-		if(flag==null) //단일 파일 다운로드
-			result=service.download(filename, req, resp);
-		else //전체 파일 다운로드
-			result=service.download(req, resp);
+		result=service.download(filename, req, resp);
+	 
 		
 		
 		//View

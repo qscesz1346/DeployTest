@@ -44,6 +44,14 @@
 					filelist = dto.getFilename().split(";");
 					filesize = dto.getFilesize().split(";");
 				}
+				
+				//시작번호 계산
+				int np = Integer.parseInt(nowPage);
+				int numPerPage=10;
+				int start=(np*numPerPage)-numPerPage+1;
+				
+				//끝번호 계산 
+				int end=np*numPerPage;
 				 
 				
 			%>
@@ -56,7 +64,7 @@
 				
 				
 				<input type=submit value="글수정" class="btn btn-primary">
-				<a href="#"  class="btn btn-primary">리스트</a>
+				<a href="/Board/list.do?nowPage=<%=nowPage%>&start=<%=start %>&end=<%=end %>"  class="btn btn-primary">리스트</a>
 				<a href="#"  class="btn btn-primary">글삭제</a>
 				<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
 				 첨부파일 보기
@@ -94,26 +102,65 @@
 			         
 			      </div>
 			      <div class="modal-footer">	
-			      	<form name=multipleform>        
-			        <a  class="btn btn-primary" href="javascript:alldownload()">모두받기</a>
-			        </form>
+			      	       
+			        <a id="downall" class="btn btn-primary" href="#">모두받기(NoZIP)</a>
+			        <a  class="btn btn-primary" href="/Board/downloadAll.do">모두받기(ZIP)</a>
+			     
 			        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
 			      </div>
 			      
+			      
+			      <!-- 다중파일 무압축 받기 -->
+			      <form name=multiform>
+			      		<%
+			      			for(int  i=0;i<filelist.length;i++)
+			      			{
+			      				%>
+			      				<input type=hidden name=file value=<%=filelist[i] %>>
+			      				<%
+			      			}
+			      		%>
+			      </form>
+			      
 			      <script>
-			
-			    		function alldownload()
-			    		{
-				      		 form = document.multipleform;
-			
-				      			for(i=0;i < <%=filelist.length%>;i++)	
-				      			{
-				      				form.action="/Board/download.do?filename="+<%=filelist[i].getName()%>;
-				      				form.submit();
-				      			}     			
-				      		 	      		
-				      	}
+			      $(document).ready(function(){
+			            
+			    	  	form = document.multiform;
+			            var iFrameCnt = 0; //프레임 개수확인 ,프레임 이름 지정
+			               
+			               $('#downall').click(function(){ //다운로드 이미지 실행
+			                   
+			                  	for(i=0;i<form.childElementCount;i++)
+			                	{
+			                       fileName =form[i].value;
+			                       var url = "/Board/download.do?filename="+fileName;                           
+			                       fnCreateIframe(iFrameCnt); // 보이지 않는 iframe 생성, name는 숫자로  
+			                       $("iframe[name=" + iFrameCnt + "]").attr("src", url);     
+			                       iFrameCnt++;      
+			                       fnSleep(1000); 
+			                	}
+			                  
+			                   
+			               });
+							fnCreateIframe = function (name){
+			                   
+			                   var frm = $('<iframe name="' + name + '" style="display: none;"></iframe>');
+			                   frm.appendTo("body");
+			 
+			               } 
+			              fnSleep = function (delay){
+			                   
+			                   var start = new Date().getTime();
+			                   while (start + delay > new Date().getTime());
+			 
+			               };
+			               
+			               
+			               
+			        });
 			      </script>
+			      
+			      
 			    </div>
 			  </div>
 			  

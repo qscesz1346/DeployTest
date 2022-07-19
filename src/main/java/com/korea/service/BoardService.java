@@ -2,15 +2,16 @@ package com.korea.service;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -62,7 +63,10 @@ public class BoardService {
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd"); 
 		String date = simpleDateFormat.format(now); 
 		
-		String subPath=email+"/"+date;
+		//게시물 번호받기
+		String no = String.valueOf(dao.getLastNo()+1);
+		
+		String subPath=email+"/"+date+"/"+no;
 		
 		//3) File클래스 경로 잡고
 		File RealPath= new File(UploadPath+subPath);
@@ -153,12 +157,13 @@ public class BoardService {
 		
 		String email = dto.getWriter();
 		String regdate = dto.getRegdate();
+		String no = String.valueOf(dto.getNo());
 		regdate = regdate.substring(0,10);
 		
 		 
 		//1 경로설정
 		String downdir="c://upload";	
-		String filepath= downdir+"/"+email+"/"+regdate+"/"+filename;
+		String filepath= downdir+"/"+email+"/"+regdate+"/"+no+"/"+filename;
 		 
 		//2 헤더설정
 		resp.setContentType("application/octet-stream");
@@ -198,68 +203,67 @@ public class BoardService {
 		return false;
 	}
 	
-	
-	//다중파일 다운로드
-	public boolean download
-	(		 
-			HttpServletRequest req,
-			HttpServletResponse resp
-	)
-	{	
-		//파일명,	//등록날짜 //이메일계정 가져오기
-		HttpSession session = req.getSession();
-		BoardDTO dto = (BoardDTO)session.getAttribute("dto");
+	//ZIP으로 압축 다운로드
+	public boolean downloadAllZIP(BoardDTO dto,HttpServletResponse resp)
+	{
+		String id = UUID.randomUUID().toString();
+		//압축파일 경로
+		String zipFileName="C://Users/Administrator/Downloads/ALL_"+id+".zip";
 		
+		
+		//파일명,	//등록날짜 //이메일계정 가져오기
 		String email = dto.getWriter();
 		String regdate = dto.getRegdate();
+		String no = String.valueOf(dto.getNo());
 		regdate = regdate.substring(0,10);
 		
 		 
 		//1 경로설정
 		String downdir="c://upload";	
-		String filepath= downdir+"/"+email+"/"+regdate;
+		String subpath= downdir+"/"+email+"/"+regdate+"/"+no+"/";
+		
+		//2 파일이름 리스트
+		String filelist[] = dto.getFilename().split(";");
+
 		 
 		//2 헤더설정
-		resp.setContentType("application/octet-stream");
-
-		//3 파일검색
-		File dir = new File(filepath);
-		File[] flist = dir.listFiles(); // 파일들 꺼내오는 작업(절대경로)
+	
+		resp.setContentType("application/zip");
+		resp.setHeader("Content-Disposition", "attachment; filename=ALL_"+id+".zip");
 		
-			
-		//4 문자셋 설정
-		try {
-			
-			for(int i=0;i<flist.length;i++)
-			{
-				
 
-				String filename=flist[i].getName();
-				System.out.println("! : " + filename);
-				filename=URLEncoder.encode(filename,"utf-8").replaceAll("\\+", "%20");
-				resp.setHeader("Content-Disposition", "attachment; fileName="+filename);
+		try {
+			//프로그램 -> 파일방향 ZIPStream 생성 
+			ZipOutputStream zout = new ZipOutputStream(new FileOutputStream(zipFileName));
 			
+			for(int i=0;i<filelist.length;i++)
+			{
+				//파일->프로그램 inStream 생성
+				FileInputStream fin = new FileInputStream(subpath+filelist[i]);
 				
-				//04스트림형성(다운로드 처리)
-				FileInputStream fin = new FileInputStream(flist[i]);
-				ServletOutputStream bout=resp.getOutputStream();
+				//ZipEntry 생성,zout에 전달
+				ZipEntry ent = new ZipEntry(filelist[i]);
+				zout.putNextEntry(ent);
 				
 				int read=0;
-				byte[] buff = new byte[4096];
+				byte buff[] = new byte[4096];
 				while(true)
 				{
-					 
-					read=fin.read(buff,0,buff.length);		 
-					if(read==-1)	 
-						break;		 		
-					bout.write(buff,0,read);	 
+					read=fin.read(buff,0,buff.length);
+					if(read==-1)
+						break;
+					zout.write(buff,0,read);
+					
 				}
-			 
-				bout.flush();	
-				bout.close();	
-				fin.close();
-			
+				zout.closeEntry(); //엔트리 단위 종료
+				fin.close();	//파일 input 스트림 종료
+				
 			}
+			zout.flush();
+			zout.close();	//zipoutput스트림 종료
+			
+		
+			
 			
 			return true;
 		
@@ -269,9 +273,15 @@ public class BoardService {
 		}
 	
 		return false;
+
 	}
 	
 	
+	
+	public void CountUp(int no) {
+		dao.CountUp(no);
+	}
+
 	
 	
 	

@@ -42,9 +42,9 @@ public class BoardListController implements SubController{
 			req.setAttribute("list", list);
 			req.setAttribute("tcnt", tcnt);
 			//정리 6일차(페이징처리) 추가
-			req.setAttribute("nowPage", nowPage);
+			//req.setAttribute("nowPage", nowPage);
 			
-			req.getRequestDispatcher("/WEB-INF/board/list.jsp").forward(req, resp);
+			req.getRequestDispatcher("/WEB-INF/board/list.jsp?nowPage="+nowPage).forward(req, resp);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 

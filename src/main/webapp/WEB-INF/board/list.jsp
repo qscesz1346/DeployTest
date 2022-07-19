@@ -134,6 +134,7 @@
 				<input type="hidden" name="start"> 	<!-- DB로부터 읽을 시작 번호 -->
 				<input type="hidden" name="end">	<!-- DB로부터 읽을 끝 번호 -->
 				<input type="hidden" name="nowPage"><!-- 현재 페이지 번호 -->
+				<input type="hidden" name="init" value="true">
 			</form>
 			
 			

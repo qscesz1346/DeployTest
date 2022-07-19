@@ -54,6 +54,8 @@
 				int end=np*numPerPage;
 				 
 				
+			 
+				
 			%>
 			<form action="" method="post" >
 				<input name="title" class="form-control mb-3 w-50" value="<%=dto.getTitle()%>">

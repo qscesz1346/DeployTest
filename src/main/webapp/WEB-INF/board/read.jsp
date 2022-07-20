@@ -11,7 +11,22 @@
 
 </head>
 <body>
-
+	<%
+		
+		String MSG=(String)request.getAttribute("MSG");
+		if(MSG!=null)
+		{
+			%>
+			<script>
+				alert('<%=MSG%>');
+			</script>
+			<%
+			session.setAttribute("MSG",null);
+		}
+	
+	
+	%>
+	
 	<div class="container-md" id=wrapper style="margin:100px auto;">
 		<!-- TopMenu -->
 		<%@include file="/resources/includes/topmenu.jsp" %>
@@ -58,11 +73,11 @@
 				
 			%>
 			<form action="" method="post" >
-				<input name="title" class="form-control mb-3 w-50" value="<%=dto.getTitle()%>">
+				<input id=title name="title" class="form-control mb-3 w-50" value="<%=dto.getTitle()%>">
 				<input name="writer" class="form-control mb-3 w-50" value="<%=dto.getWriter()%>" disabled> 
 
 				
-				<textarea name="content" class="form-control mb-3 w-50" style="height:500px;"><%=dto.getContent() %></textarea>
+				<textarea id=content name="content" class="form-control mb-3 w-50" style="height:500px;"><%=dto.getContent() %></textarea>
 				
 				
 				<a  href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop2">글수정</a>
@@ -197,15 +212,33 @@
 		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 		      </div>
 		      
-		      <form>
+		      <form action="/Board/update.do" method="post" name="updatefrm">
 			      <div class="modal-body">
 			        <input type=password class="form-control"  name=pwd placeholder="INSERT PASSWORD">
+			        <input type=hidden name=title>
+			        <input type=hidden name=content>
+			        <input type=hidden name=nowPage value=<%=nowPage %> >
 			      </div>
 			      <div class="modal-footer">
-			        <button type="submit" class="btn btn-primary">수정요청</button>
+			        <button type="button" class="btn btn-primary" id=updatebtn>수정요청</button>
 			        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
 			      </div>
 		      </form>
+			  
+			  <script>
+			  	$(document).ready(function(){
+			  		
+			  		$("#updatebtn").on("click",function(){
+			  			
+			  			form=document.updatefrm;
+			  			form[1].value = $("#title").val();
+			  			form[2].value =  $("#content").val();
+			  			form.submit();
+			  		})
+			  		
+			  	})
+			  
+			  </script>
 		      
 		    </div>
 		  </div>

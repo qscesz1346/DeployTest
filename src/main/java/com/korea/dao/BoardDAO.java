@@ -207,6 +207,27 @@ public class BoardDAO {
 		}
 	}
 	
+	public boolean Update(BoardDTO dto)
+	{
+		
+		try {
+		
+			pstmt = conn.prepareStatement("update tbl_board set title=?,content=? where no=?");
+			pstmt.setString(1, dto.getTitle());
+			pstmt.setString(2, dto.getContent());
+			pstmt.setInt(3, dto.getNo());
+			int result=pstmt.executeUpdate();
+			if(result>0)
+				return true;
+		
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally{
+			try {pstmt.close();}catch(Exception e) {e.printStackTrace();}
+		}
+		return false;
+		
+	}
 	
 	
 	

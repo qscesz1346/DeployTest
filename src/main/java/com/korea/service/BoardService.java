@@ -283,6 +283,9 @@ public class BoardService {
 	}
 
 	
+	public boolean UpdateBoard(BoardDTO dto) {
+		return dao.Update(dto);
+	}
 	
 	
 }

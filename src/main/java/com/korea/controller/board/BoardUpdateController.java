@@ -17,11 +17,13 @@ public class BoardUpdateController implements SubController{
 	@Override
 	public void execute(HttpServletRequest req, HttpServletResponse resp) {
 		
+		//변경요청 파라미터 받기
 		String title = req.getParameter("title");
 		String content = req.getParameter("content");
 		String pwd = req.getParameter("pwd");
 		String nowPage = req.getParameter("nowPage");
 		
+		//읽고 있는 게시물 꺼내오기(세션)
 		HttpSession session = req.getSession();
 		BoardDTO dto = (BoardDTO)session.getAttribute("dto");
 		

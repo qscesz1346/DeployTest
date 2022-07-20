@@ -231,6 +231,21 @@ public class BoardDAO {
 	
 	
 	
+	public boolean Delete(BoardDTO dto)
+	{
+		
+		try {
+			//DB삭제
+			
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally{
+			
+		}
+		return false;
+	}
+
 }
 
 

@@ -59,13 +59,13 @@
 			%>
 			<form action="" method="post" >
 				<input name="title" class="form-control mb-3 w-50" value="<%=dto.getTitle()%>">
-				<input name="writer" class="form-control mb-3 w-50" value="<%=dto.getWriter()%>"> 
+				<input name="writer" class="form-control mb-3 w-50" value="<%=dto.getWriter()%>" disabled> 
 
 				
 				<textarea name="content" class="form-control mb-3 w-50" style="height:500px;"><%=dto.getContent() %></textarea>
 				
 				
-				<input type=submit value="글수정" class="btn btn-primary">
+				<a  href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop2">글수정</a>
 				<a href="/Board/list.do?nowPage=<%=nowPage%>&start=<%=start %>&end=<%=end %>"  class="btn btn-primary">리스트</a>
 				<a href="#"  class="btn btn-primary">글삭제</a>
 				<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
@@ -185,6 +185,31 @@
 		
 	
 	</div>
+
+
+	<!-- 글수정 Modal -->		
+		<!-- Modal -->
+		<div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		  <div class="modal-dialog modal-dialog-centered">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="staticBackdropLabel">패스워드 확인</h5>
+		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		      </div>
+		      
+		      <form>
+			      <div class="modal-body">
+			        <input type=password class="form-control"  name=pwd placeholder="INSERT PASSWORD">
+			      </div>
+			      <div class="modal-footer">
+			        <button type="submit" class="btn btn-primary">수정요청</button>
+			        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+			      </div>
+		      </form>
+		      
+		    </div>
+		  </div>
+		</div>
 
 
 </body>

@@ -57,7 +57,7 @@
 	 			if(!request.getParameter("nowPage").equals("null"))
 				{
 					nowPage =Integer.parseInt(request.getParameter("nowPage"));
-
+					
 					
 				} 
 				 

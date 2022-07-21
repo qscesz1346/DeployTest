@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 
 <%@include file="/resources/includes/link.jsp" %>
-<link rel="stylesheet" href="resources/css/common.css" >
+<link rel="stylesheet" href="/resources/css/common.css" >
 
 </head>
 <body>
@@ -87,6 +87,8 @@
 				 첨부파일 보기
 				</button>
 			</form>
+			
+
 			<!-- Modal -->
 			<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 			  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -128,6 +130,10 @@
 			      
 			      
 			      <!-- 다중파일 무압축 받기 -->
+			      <%
+			      	if(filelist!=null)
+			      	{
+			      %>
 			      <form name=multiform>
 			      		<%
 			      			for(int  i=0;i<filelist.length;i++)
@@ -138,6 +144,10 @@
 			      			}
 			      		%>
 			      </form>
+			      <%
+			      	}
+			      %>
+			      
 			      
 			      <script>
 			      $(document).ready(function(){
@@ -179,6 +189,8 @@
 			      
 			      
 			    </div>
+			    
+			    
 			  </div>
 			  
 			  
@@ -196,10 +208,63 @@
 				
 		</div>
 		
-		<!-- Footer -->
-		
 	
+
 	</div>
+
+
+
+
+			<!-- Footer -->
+		
+		<!-- 댓글남기기 -->
+		<div id=replycontainer class="w-50" style="position:absolute;left:53%;top:350px;">
+			<form>
+				<div>
+					<textarea id=comment class="form-control mb-3" style="height:200px;width:580px;" placeholder="댓글을입력해주세요"></textarea>
+					<input type=hidden name=nowPage value=<%=nowPage %> >	
+				</div>
+				<div class="mb-3">
+					<a href="javascript:postreply()" class="btn btn-secondary">댓글 남기기</a>
+				</div>
+			</form>
+			<div class="mb-2">
+				댓글수 : <span>100</span>
+			</div>
+			<div style="overflow:auto;height:300px;width:580px;" id="replylist">
+				<!-- 여기에 댓글리스트가 출력되어야함 -->
+				<div class="form-control">
+					<span style=font-size:0.5rem>example@example.com</span>&nbsp;&nbsp;
+					<span style=font-size:0.5rem>2022-07-21</span><br>
+					<span>글내용입니다아~~~</span>
+				</div>
+			</div>
+		</div> 
+		<!-- 댓글남기기 끝 -->	
+		<script>
+			function postreply()
+			{
+				//댓글 등록
+			}
+			function listreply()
+			{
+				//댓글 목록 가져오기
+			}
+			function totalreplycnt()
+			{
+				//댓글 수 
+			}
+		</script>
+
+
+
+
+
+
+
+
+
+
 
 
 	<!-- 글수정 Modal -->		

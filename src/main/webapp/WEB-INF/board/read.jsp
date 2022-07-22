@@ -244,7 +244,7 @@
 				$.ajax({
 					url:'/Board/replypost.do',
 					type:'GET',
-					data:{"comment":$('#comment').val(),"nowPage":$(nowPage).val()},
+					data:{"comment":$('#comment').val()},
 					error:function(){
 						alert("에러~");
 					},

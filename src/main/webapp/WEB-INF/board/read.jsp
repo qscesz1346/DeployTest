@@ -222,7 +222,7 @@
 			<form>
 				<div>
 					<textarea id=comment class="form-control mb-3" style="height:200px;width:580px;" placeholder="댓글을입력해주세요"></textarea>
-					<input type=hidden name=nowPage value=<%=nowPage %> >	
+					<input type=hidden name=nowPage  id=nowPage value=<%=nowPage %> >	
 				</div>
 				<div class="mb-3">
 					<a href="javascript:postreply()" class="btn btn-secondary">댓글 남기기</a>
@@ -245,11 +245,35 @@
 			function postreply()
 			{
 				//댓글 등록
+				$.ajax({
+					url:'/Board/replypost.do',
+					type:'GET',
+					data:{"comment":$('#comment').val(),"nowPage":$(nowPage).val()},
+					error:function(){
+						alert("에러~");
+					},
+					success:function(result){
+						alert(result);
+					}			
+				});
 			}
 			function listreply()
 			{
-				//댓글 목록 가져오기
+				//댓글 등록
+				$.ajax({
+					url:'/Board/replylist.do',
+					type:'GET',
+					error:function(){
+						alert("에러~");
+					},
+					success:function(result){
+						alert(result);
+					}			
+				});
+				
 			}
+			listreply();
+			
 			function totalreplycnt()
 			{
 				//댓글 수 

@@ -299,8 +299,30 @@ public class BoardDAO {
 		}
 		return list;
 	}
+	//댓글 카운트
+	public int getTotalReplyCnt(int bno) {
+		
+		int tcnt=0;
+		try {
+			
+			pstmt = conn.prepareStatement("select count(*) from tbl_reply where bno=?");
+			pstmt.setInt(1, bno);
+			rs=pstmt.executeQuery();
+			rs.next();
+			tcnt=rs.getInt(1);
+			
+		
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally{
+			try {rs.close();}catch(Exception e) {e.printStackTrace();}
+			try {pstmt.close();}catch(Exception e) {e.printStackTrace();}
+		}
+		return tcnt;		
+	}
 	
-
+	
+	
 }
 
 

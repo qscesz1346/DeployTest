@@ -30,12 +30,18 @@ public class BoardReplylistController implements SubController{
 			
 			for(int i=0;i<list.size();i++) {
 				
-				out.println(list.get(i).getWriter()+" ");
-				out.println(list.get(i).getRegdate()+" ");
-				out.println(list.get(i).getContent()+"\n");
+				out.println("<div class=\"form-control\">");
+				out.println("<span style=font-size:0.5rem>"+list.get(i).getWriter()+"</span>&nbsp;&nbsp;");
+				out.println("<span style=font-size:0.5rem>"+list.get(i).getRegdate()+"</span><br>");
+				out.println("<span>"+list.get(i).getContent()+"</span>");
+				out.println("</div>");
+				
 				
 			}
 			
+
+		
+		
 			
 		}catch(Exception e) {
 			e.printStackTrace();

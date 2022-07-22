@@ -17,6 +17,7 @@ import com.korea.controller.board.BoardDownloadController;
 import com.korea.controller.board.BoardListController;
 import com.korea.controller.board.BoardPostController;
 import com.korea.controller.board.BoardReadController;
+import com.korea.controller.board.BoardReplycntController;
 import com.korea.controller.board.BoardReplylistController;
 import com.korea.controller.board.BoardReplypostController;
 import com.korea.controller.board.BoardUpdateController;
@@ -59,7 +60,9 @@ public class FrontController extends HttpServlet{
 		 list.put("/Board/delete.do", new BoardDeleteController());
 		 list.put("/Board/replypost.do", new BoardReplypostController());
 		 list.put("/Board/replylist.do", new BoardReplylistController());
-		 
+		 list.put("/Board/replycnt.do", new BoardReplycntController());
+		
+			 
 			 
 		 //공지사항
 		 list.put("/Notice/list.do", new NoticeListController());

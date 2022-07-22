@@ -229,15 +229,11 @@
 				</div>
 			</form>
 			<div class="mb-2">
-				댓글수 : <span>100</span>
+				댓글수 : <span id=trcnt></span>
 			</div>
 			<div style="overflow:auto;height:300px;width:580px;" id="replylist">
 				<!-- 여기에 댓글리스트가 출력되어야함 -->
-				<div class="form-control">
-					<span style=font-size:0.5rem>example@example.com</span>&nbsp;&nbsp;
-					<span style=font-size:0.5rem>2022-07-21</span><br>
-					<span>글내용입니다아~~~</span>
-				</div>
+	
 			</div>
 		</div> 
 		<!-- 댓글남기기 끝 -->	
@@ -253,7 +249,8 @@
 						alert("에러~");
 					},
 					success:function(result){
-						alert(result);
+						listreply();
+						$('#comment').val("");
 					}			
 				});
 			}
@@ -267,7 +264,9 @@
 						alert("에러~");
 					},
 					success:function(result){
-						alert(result);
+						//alert(result);
+						$("#replylist").html(result);
+						totalreplycnt();
 					}			
 				});
 				
@@ -277,6 +276,18 @@
 			function totalreplycnt()
 			{
 				//댓글 수 
+				$.ajax({
+					url:'/Board/replycnt.do',
+					type:'GET',
+					error:function(){
+						alert("ERROR~");
+					},
+					success:function(result){
+						//alert(result);
+						$('#trcnt').html(result);
+					}			
+				});
+				
 			}
 		</script>
 

@@ -326,6 +326,10 @@ public class BoardService {
 		return dao.getReplylist(bno);
 	}
 	
+	public int getTotalReplyCnt(int bno) {
+		return dao.getTotalReplyCnt(bno);
+	}
+	
 }
 
 

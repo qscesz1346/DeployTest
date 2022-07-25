@@ -33,18 +33,12 @@
 									for(i=0;i<v4.length;i++){
 										document.write(v4[i].terminalNm+" "+v4[i].terminalId+"<br>");	
 									}
-									
-									
-								})
-								
-								
+								})	
 							}
+							 
 						})
-						
-					}
-					
-				})
-				
+					}			
+				})	
 			})
 			
 			

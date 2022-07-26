@@ -45,6 +45,12 @@
 					<a href="javascript:ReqBusInfo()" class="btn btn-primary">조회</a>
 			</div>
 		</div>
+		
+		
+		<div class=row>
+			<table id=resulttbl class="table table-striped"></table>
+		</div>
+		
 	</div>
  
 	
@@ -92,6 +98,28 @@
 			contentType : "application/json",
 			success : function(result){
 				
+				$("#resulttbl").children().remove();
+				
+				bodylist=result["response"]["body"]["items"]["item"];
+				
+				str="<tr>"
+				str+="<th>출발지터미널</th>"
+				str+="<th>목적지터미널</th>"
+				str+="<th>출발시간</th>"
+				str+="<th>도착시간</th>"
+				str+="<th>이용요금</th>"
+				str+="</tr>"
+				
+				for(i=0;i<bodylist.length;i++){
+					str+="<tr>"
+					str+="<td>"+bodylist[i].depPlaceNm+"</td>"
+					str+="<td>"+bodylist[i].arrPlaceNm+"</td>"
+					str+="<td>"+bodylist[i].depPlandTime+"</td>"
+					str+="<td>"+bodylist[i].arrPlandTime+"</td>"		
+					str+="<td>"+bodylist[i].charge+"</td>"
+					str+="</tr>"
+				}
+				$("#resulttbl").append(str);
 			},
 			error : function(){}
 		})	

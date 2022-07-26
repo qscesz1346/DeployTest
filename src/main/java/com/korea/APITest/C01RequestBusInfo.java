@@ -1,6 +1,9 @@
 package com.korea.APITest;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -28,7 +31,7 @@ public class C01RequestBusInfo extends HttpServlet{
 		String busGradeId=req.getParameter("busGradeId");		//버스등급
 		
 		//경로 설정
-		String addr="https://apis.data.go.kr/1613000/ExpBusInfoService/getStrtpntAlocFndExpbusInfo?"
+		String addr="http://apis.data.go.kr/1613000/ExpBusInfoService/getStrtpntAlocFndExpbusInfo?"
 				+"serviceKey="+serviceKey
 				+"&depTerminalId="+depTerminalId
 				+"&arrTerminalId="+arrTerminalId
@@ -38,7 +41,24 @@ public class C01RequestBusInfo extends HttpServlet{
 				+"&pageNo="+pageNo
 				+"&_type=json";
 		
-		System.out.println(addr);
+		//System.out.println(addr);
+		
+		URL url = new URL(addr);
+		
+		BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream(),"UTF-8"));
+		StringBuffer sb = new StringBuffer();
+		String str = null;
+		
+		while(true) {
+			str=br.readLine();
+			if(str==null)
+				break;
+			sb.append(str);
+		}
+		br.close();
+	
+		System.out.println(sb.toString());
+		resp.getWriter().write(sb.toString());
 		
 	}
 
